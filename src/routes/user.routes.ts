@@ -4,7 +4,7 @@ import * as userController from "../controllers/user.controller";
 import { upload } from "../config/cloudinary";
 import { authMiddleware } from "../middlewares/auth.middleware";
 
-const router = Router().use(authMiddleware);
+const router = Router();
 // .use(authMiddleware);
 
 // get all users
@@ -15,5 +15,7 @@ router.post("/", upload.single("image"), userController.createUser);
 router.get("/:id", userController.getOne);
 // delete one user
 router.delete("/:id", userController.destroy);
+// update user
+router.patch("/:id", upload.single, userController.update);
 
 export default router;

@@ -4,6 +4,7 @@ import { v2 as cloudinary } from "cloudinary";
 // imports model and interface for users
 import User from "../models/user.model";
 import IUser from "../interfaces/user.interface";
+import userModel from "../models/user.model";
 
 // get all users
 export const findAll = async (
@@ -41,7 +42,6 @@ export const createUser = async (
       const result = await cloudinary.uploader.upload(imageBase64, {
         // image size limit
         width: 500,
-        height: 500,
       });
       imagenUrl = result.secure_url;
     }
@@ -78,7 +78,7 @@ export const getOne = async (
     return next(error);
   }
 };
-
+//delete user
 export const destroy = async (
   req: Request,
   res: Response,
@@ -95,6 +95,44 @@ export const destroy = async (
     await user.deleteOne();
     // show deleted user in json
     return res.status(200).json(user);
+  } catch (error) {
+    return next(error);
+  }
+};
+// update user
+export const update = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { id } = req.params;
+    const { nombre, email, password, rol } = req.body;
+    let imagenUrl = "";
+    if (req.file) {
+      // get file type and data in buffer
+      const imageBase64 = `data:${
+        req.file.mimetype
+      };base64,${req.file.buffer.toString("base64")}`;
+      // upload image in base64 to cloudinary
+      const result = await cloudinary.uploader.upload(imageBase64, {
+        // image size limit
+        width: 500,
+        height: 500,
+      });
+      imagenUrl = result.secure_url;
+    }
+    const newData = {
+      ...(nombre && { nombre }),
+      ...(email && { email }),
+      ...(password && { password }),
+      ...(rol && { rol }),
+      ...(imagenUrl && { imagenUrl }),
+    };
+    const updatedUser = await userModel.findByIdAndUpdate(id, newData, {
+      new: true,
+    });
+    res.status(200).json(updatedUser);
   } catch (error) {
     return next(error);
   }
