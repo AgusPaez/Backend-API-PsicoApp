@@ -8,7 +8,7 @@ import IcontentMain from "../interfaces/contentMain.interface";
 // import User from "../models/user.model";
 // import IUser from "../interfaces/user.interface";
 
-// get all content
+// get all content for MAIN PAGE
 export const findAll = async (
   req: Request,
   res: Response,
