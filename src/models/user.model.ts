@@ -10,6 +10,10 @@ const UserSchema = new Schema<IUser>(
       type: String,
       required: [true, "El nombre es obligatorio"], //hacer validaciones con libreria
     },
+    apellido: {
+      type: String,
+      required: [true, "El nombre es obligatorio"],
+    },
     email: {
       type: String,
       unique: true,

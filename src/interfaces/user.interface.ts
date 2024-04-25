@@ -4,6 +4,7 @@ import { Document } from "mongoose";
 // define interface
 interface IUser extends Document {
   nombre: string;
+  apellido: string;
   email: string;
   password: string;
   rol: string;

@@ -30,7 +30,7 @@ export const createUser = async (
 ) => {
   try {
     // extracts the necessary data to create
-    const { nombre, email, password, rol } = req.body;
+    const { nombre, apellido, email, password, rol } = req.body;
     let imagenUrl = "";
     // if a file is uploaded
     if (req.file) {
@@ -48,6 +48,7 @@ export const createUser = async (
     // new instance
     const user: IUser = new User({
       nombre,
+      apellido,
       email,
       password,
       rol,
@@ -107,7 +108,7 @@ export const update = async (
 ) => {
   try {
     const { id } = req.params;
-    const { nombre, email, password, rol } = req.body;
+    const { nombre, apellido, email, password, rol } = req.body;
     let imagenUrl = "";
     if (req.file) {
       // get file type and data in buffer
@@ -126,6 +127,7 @@ export const update = async (
     }
     const newData = {
       ...(nombre && { nombre }),
+      ...(apellido && { apellido }),
       ...(email && { email }),
       ...(password && { password }),
       ...(rol && { rol }),
