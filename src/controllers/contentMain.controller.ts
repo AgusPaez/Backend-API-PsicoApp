@@ -32,7 +32,17 @@ export const createContentMain = async (
 ) => {
   try {
     // extracts the necessary data to create
-    const { contenido1, contenido2 } = req.body;
+    const {
+      descripcionAboutMe,
+      descripcionEstudioAbordaje,
+      fotoPiscologo,
+      medioPago,
+      contactoMail,
+      contactoNumero,
+      objetivo,
+      contenido1,
+      contenido2,
+    } = req.body;
     let imagenUrl = "";
     // if a file is uploaded
     if (req.file) {
@@ -50,6 +60,13 @@ export const createContentMain = async (
     }
     // new instance
     const contentMain: IcontentMain = new ContentMain({
+      descripcionAboutMe,
+      descripcionEstudioAbordaje,
+      fotoPiscologo,
+      medioPago,
+      contactoMail,
+      contactoNumero,
+      objetivo,
       contenido1,
       contenido2,
       // imagenUrl,
