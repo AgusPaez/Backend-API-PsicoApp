@@ -1,5 +1,6 @@
 //imports
 import { Request, Response, NextFunction } from "express";
+import * as contentStudiesService from "../services/contentStudiesService";
 //imports interface and model for contentStudies
 import IcontentStudies from "../interfaces/contentStudies.interface";
 import contentStudiesModel from "../models/contentStudies.model";
@@ -12,7 +13,7 @@ export const findAll = async (
 ) => {
   try {
     // save ContentStudies in "ContentStudies" variable
-    const contentStudies = await contentStudiesModel.find();
+    const contentStudies = await contentStudiesService.findAllContentStudies();
     // return contentStudies in json
     return res.status(200).json(contentStudies);
   } catch (error) {
