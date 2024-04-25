@@ -120,7 +120,9 @@ export const update = async (
         width: 500,
         height: 500,
       });
+      console.log(imageBase64);
       imagenUrl = result.secure_url;
+      console.log(imagenUrl);
     }
     const newData = {
       ...(nombre && { nombre }),

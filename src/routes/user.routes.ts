@@ -16,6 +16,6 @@ router.get("/:id", userController.getOne);
 // delete one user
 router.delete("/:id", userController.destroy);
 // update user
-router.patch("/:id", upload.single, userController.update);
+router.patch("/:id", upload.single("image"), userController.update);
 
 export default router;
