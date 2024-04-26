@@ -4,7 +4,7 @@ import * as contentStudiesController from "../controllers/contentStudies.control
 const router = Router();
 
 //get all content
-router.get("/", contentStudiesController.findAll);
+router.get("/findAll", contentStudiesController.findAll);
 //create content
 router.post("/", contentStudiesController.createContentStudies);
 //get content by id
