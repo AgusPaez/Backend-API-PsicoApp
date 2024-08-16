@@ -24,7 +24,7 @@ const UserSchema = new Schema<IUser>(
     password: {
       type: String,
       required: [true, "La contraseña es obligatoria"],
-      select: false,
+      //select: false,
     },
     rol: {
       type: String,
@@ -46,14 +46,14 @@ UserSchema.methods.guardarContraseña =
   async function guardarContraseña(): Promise<boolean> {
     const user = this as any;
     const salt = await bcrypt.genSalt(10);
-    user.contraseña = await bcrypt.hash(user.contraseña, salt);
+    user.password = await bcrypt.hash(user.password, salt);
     return true;
   };
 // metodo para validar
 UserSchema.methods.validarContraseña = function validarContraseña(
-  contraseña: string
+  password: string
 ): Promise<boolean> {
-  return bcrypt.compare(contraseña, (this as any).contraseña);
+  return bcrypt.compare(password, (this as any).password);
 };
 
 export default model<IUser>("User", UserSchema);

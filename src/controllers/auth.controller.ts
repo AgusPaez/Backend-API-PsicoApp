@@ -11,16 +11,19 @@ export const signUp = async (
 ) => {
   try {
     //recibimos de la request una interfaz
-    const { nombre, email, password, rol } = req.body;
+    const { nombre, apellido, email, password, rol, imagenUrl } = req.body;
     let user: IUser = new User({
       nombre,
+      apellido,
       email,
       password,
       rol,
+      imagenUrl,
     });
     //Validacion de lo de arriba
+    const passwordSaved = await user.guardarContraseña();
 
-    if ((await user.guardarContraseña()) === false) {
+    if (!passwordSaved) {
       res.status(400).json("Password encryption failed");
     }
 
@@ -57,7 +60,7 @@ export const logIn = async (
       { sub: user._id },
       process.env.JWT_SECRET || "",
       {
-        // DEFINIR APARTADOS para mas segguridad
+        // DEFINIR APARTADOS para mas seguridad
         expiresIn: process.env.JWT_EXPIRATION,
       }
     );
