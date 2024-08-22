@@ -117,3 +117,51 @@ export const destroy = async (
     return next(error);
   }
 };
+
+// update contentMain
+export const update = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { id } = req.params;
+    const {
+      descripcionAboutMe,
+      descripcionEstudioAbordaje,
+      fotoPiscologo,
+      medioPago,
+      contactoMail,
+      contactoNumero,
+      objetivo,
+      contenido1,
+      contenido2,
+    } = req.body;
+
+    // Asignar los datos si existen
+    const newData: Partial<IcontentMain> = {
+      ...(descripcionAboutMe && { descripcionAboutMe }),
+      ...(descripcionEstudioAbordaje && { descripcionEstudioAbordaje }),
+      ...(fotoPiscologo !== undefined && { fotoPiscologo }),
+      ...(medioPago !== undefined && { medioPago }),
+      ...(contactoMail && { contactoMail }),
+      ...(contactoNumero && { contactoNumero }),
+      ...(objetivo && { objetivo }),
+      ...(contenido1 && { contenido1 }),
+      ...(contenido2 && { contenido2 }),
+    };
+
+    // uptdate object
+    const updatedContent = await ContentMain.findByIdAndUpdate(id, newData, {
+      new: true,
+    });
+
+    if (!updatedContent) {
+      return res.status(404).json({ message: "Contenido no encontrado" });
+    }
+
+    return res.status(200).json(updatedContent);
+  } catch (error) {
+    return next(error);
+  }
+};

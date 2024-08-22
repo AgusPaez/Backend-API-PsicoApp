@@ -19,6 +19,7 @@ router.post(
 router.get("/:id", contentMainController.getOne);
 // delete all content
 router.delete("/:id", contentMainController.destroy);
-//AGREGAR RUTA PARA MODIFICAR CONTENIDO
+// update content main
+router.put("/:id", contentMainController.update);
 
 export default router;
