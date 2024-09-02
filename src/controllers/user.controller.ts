@@ -30,7 +30,16 @@ export const createUser = async (
 ) => {
   try {
     // extracts the necessary data to create
-    const { nombre, apellido, email, password, rol } = req.body;
+    const {
+      nombre,
+      apellido,
+      email,
+      password,
+      rol,
+      numero,
+      fecha_nacimiento,
+      obra_social,
+    } = req.body;
     let imagenUrl = "";
     // if a file is uploaded
     if (req.file) {
@@ -53,6 +62,9 @@ export const createUser = async (
       password,
       rol,
       imagenUrl,
+      numero,
+      fecha_nacimiento,
+      obra_social,
     });
     // save user
     await user.save();
@@ -108,7 +120,16 @@ export const update = async (
 ) => {
   try {
     const { id } = req.params;
-    const { nombre, apellido, email, password, rol } = req.body;
+    const {
+      nombre,
+      apellido,
+      email,
+      password,
+      rol,
+      numero,
+      fecha_nacimiento,
+      obra_social,
+    } = req.body;
     let imagenUrl = "";
     if (req.file) {
       // get file type and data in buffer
@@ -132,6 +153,9 @@ export const update = async (
       ...(password && { password }),
       ...(rol && { rol }),
       ...(imagenUrl && { imagenUrl }),
+      ...(numero && { numero }),
+      ...(fecha_nacimiento && { fecha_nacimiento }),
+      ...(obra_social && { obra_social }),
     };
     const updatedUser = await userModel.findByIdAndUpdate(id, newData, {
       new: true,

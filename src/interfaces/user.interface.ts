@@ -9,6 +9,9 @@ interface IUser extends Document {
   password: string;
   rol: string;
   imagenUrl?: string; //opcional
+  numero?: Number;
+  fecha_nacimiento: Date;
+  obra_social: string;
   validarContraseña(contraseña: string): Promise<boolean>;
   guardarContraseña(): Promise<boolean>;
 }

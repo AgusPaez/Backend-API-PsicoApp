@@ -11,7 +11,17 @@ export const signUp = async (
 ) => {
   try {
     //recibimos de la request una interfaz
-    const { nombre, apellido, email, password, rol, imagenUrl } = req.body;
+    const {
+      nombre,
+      apellido,
+      email,
+      password,
+      rol,
+      imagenUrl,
+      numero,
+      fecha_nacimiento,
+      obra_social,
+    } = req.body;
     let user: IUser = new User({
       nombre,
       apellido,
@@ -19,6 +29,9 @@ export const signUp = async (
       password,
       rol,
       imagenUrl,
+      numero,
+      fecha_nacimiento,
+      obra_social,
     });
     //Validacion de lo de arriba
     const passwordSaved = await user.guardarContraseña();

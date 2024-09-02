@@ -36,6 +36,27 @@ const UserSchema = new Schema<IUser>(
       type: String,
       required: false,
     },
+    numero: {
+      type: Number,
+      required: false,
+    },
+    fecha_nacimiento: {
+      type: Date,
+      required: [true, "La fecha de nacimiento es obligatoria"],
+    },
+    obra_social: {
+      type: String,
+      default: "NO TIENE",
+      enum: [
+        "NO TIENE",
+        "SANCOR",
+        "SANCOR SALUD",
+        "PROVINCIA",
+        "SWISS",
+        "OSECAC",
+        "JERARQUICOS",
+      ],
+    },
   },
   {
     timestamps: { createdAt: true, updatedAt: true },
