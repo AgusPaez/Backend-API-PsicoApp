@@ -13,7 +13,7 @@ interface Iappointment extends Document {
   email?: string;
   fecha_consulta: Date;
   detalle_consulta: string;
-  estado_consulta: boolean;
+  estado_consulta: string;
 }
 
 export default Iappointment;

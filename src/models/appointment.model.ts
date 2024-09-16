@@ -37,9 +37,10 @@ const AppointmentSchema = new Schema<Iappointment>({
     type: String,
   },
   estado_consulta: {
-    type: Boolean,
-    required: [true, "el estado es obligatorio"],
-    default: false,
+    type: String,
+    enum: ["pendiente", "confirmada", "finalizada", "cancelada", "noAsistida"],
+    required: [true, "El estado de la consulta es obligatorio"],
+    default: "pendiente",
   },
 });
 
