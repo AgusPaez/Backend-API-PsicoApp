@@ -8,5 +8,9 @@ const router = Router();
 router.get("/findAll", appointmentController.findAll);
 // create
 router.post("/", appointmentController.createAppointment);
+//update
+router.put("/:id", appointmentController.updateAppointment);
+//delete
+router.delete("/:id", appointmentController.deleteAppointment);
 
 export default router;

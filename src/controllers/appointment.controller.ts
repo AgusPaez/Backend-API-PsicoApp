@@ -62,3 +62,77 @@ export const createAppointment = async (
     return next(error);
   }
 };
+
+// update
+export const updateAppointment = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    // extract the id from params and the updated data from the request body
+    const { id } = req.params;
+    const {
+      nombre,
+      apellido,
+      edad,
+      motivo_consulta,
+      derivacion,
+      numero,
+      email,
+      fecha_consulta,
+      detalle_consulta,
+      estado_consulta,
+    } = req.body;
+
+    // find the appointment by id and update it with new data
+    const updatedAppointment = await appointmentModel.findByIdAndUpdate(
+      id,
+      {
+        nombre,
+        apellido,
+        edad,
+        motivo_consulta,
+        derivacion,
+        numero,
+        email,
+        fecha_consulta,
+        detalle_consulta,
+        estado_consulta,
+      },
+      { new: true } // option to return the updated document
+    );
+
+    if (!updatedAppointment) {
+      return res.status(404).json({ message: "Appointment not found" });
+    }
+
+    return res.status(200).json(updatedAppointment);
+  } catch (error) {
+    return next(error);
+  }
+};
+// delete
+export const deleteAppointment = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    // extract the id from params
+    const { id } = req.params;
+
+    // find the appointment by id and delete it
+    const deletedAppointment = await appointmentModel.findByIdAndDelete(id);
+
+    if (!deletedAppointment) {
+      return res.status(404).json({ message: "Appointment not found" });
+    }
+
+    return res
+      .status(200)
+      .json({ message: "Appointment deleted successfully" });
+  } catch (error) {
+    return next(error);
+  }
+};
