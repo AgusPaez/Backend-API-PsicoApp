@@ -38,6 +38,9 @@ export const createAppointment = async (
       derivacion,
       numero,
       email,
+      fecha_consulta,
+      detalle_consulta,
+      estado_consulta,
     } = req.body;
     // new instance
     const appointment: Iappointment = new appointmentModel({
@@ -48,6 +51,9 @@ export const createAppointment = async (
       derivacion,
       numero,
       email,
+      fecha_consulta,
+      detalle_consulta,
+      estado_consulta,
     });
     // save contentStudies
     await appointment.save();

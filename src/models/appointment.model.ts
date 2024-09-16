@@ -29,6 +29,18 @@ const AppointmentSchema = new Schema<Iappointment>({
   email: {
     type: String,
   },
+  fecha_consulta: {
+    type: Date,
+    required: [true, "la fecha de la consulta es obligatoria"],
+  },
+  detalle_consulta: {
+    type: String,
+  },
+  estado_consulta: {
+    type: Boolean,
+    required: [true, "el estado es obligatorio"],
+    default: false,
+  },
 });
 
 export default model<Iappointment>("Appointment", AppointmentSchema);

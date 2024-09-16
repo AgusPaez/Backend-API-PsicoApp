@@ -11,6 +11,9 @@ interface Iappointment extends Document {
   derivacion?: string;
   numero: number;
   email?: string;
+  fecha_consulta: Date;
+  detalle_consulta: string;
+  estado_consulta: boolean;
 }
 
 export default Iappointment;
