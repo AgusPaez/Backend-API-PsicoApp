@@ -136,3 +136,25 @@ export const deleteAppointment = async (
     return next(error);
   }
 };
+// get appointments (email)
+export const findAppointmentsByEmail = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    // extract the email from params
+    const { email } = req.params;
+    // find the appointment by email
+    const appointments = await appointmentModel.find({ email });
+    if (!appointments.length) {
+      return res
+        .status(404)
+        .json({ message: "No appointments found for this email" });
+    }
+    // return appointments
+    return res.status(200).json(appointments);
+  } catch (error) {
+    return next(error);
+  }
+};

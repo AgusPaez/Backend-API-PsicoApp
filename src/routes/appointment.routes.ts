@@ -12,5 +12,7 @@ router.post("/", appointmentController.createAppointment);
 router.put("/:id", appointmentController.updateAppointment);
 //delete
 router.delete("/:id", appointmentController.deleteAppointment);
+//get user (email)
+router.get("/email/:email", appointmentController.findAppointmentsByEmail);
 
 export default router;
