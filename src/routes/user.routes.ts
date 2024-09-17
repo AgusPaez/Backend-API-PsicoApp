@@ -17,5 +17,7 @@ router.get("/:id", userController.getOne);
 router.delete("/:id", userController.destroy);
 // update user
 router.patch("/:id", upload.single("image"), userController.update);
+// get user (email)
+router.get("/email/:email", userController.findUserByEmail);
 
 export default router;

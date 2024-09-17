@@ -165,3 +165,24 @@ export const update = async (
     return next(error);
   }
 };
+// get user (email)
+export const findUserByEmail = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { email } = req.params;
+
+    // Buscar el usuario por email
+    const user = await User.findOne({ email });
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    return res.status(200).json(user);
+  } catch (error) {
+    return next(error);
+  }
+};
