@@ -9,7 +9,7 @@ router.get("/findAll", appointmentController.findAll);
 // create
 router.post("/", appointmentController.createAppointment);
 //update
-router.put("/:id", appointmentController.updateAppointment);
+router.patch("/:id", appointmentController.updateAppointment);
 //delete
 router.delete("/:id", appointmentController.deleteAppointment);
 //get user (email)
