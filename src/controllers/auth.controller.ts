@@ -1,28 +1,46 @@
 //imports
 import { Request, Response, NextFunction } from "express";
+import { v2 as cloudinary } from "cloudinary";
+// imports model and interface for users
 import User from "../models/user.model";
 import IUser from "../interfaces/user.interface";
-import jwt from "jsonwebtoken"; //importamos
+//import jwt
+import jwt from "jsonwebtoken";
 
+// create user
 export const signUp = async (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
   try {
-    //recibimos de la request una interfaz
+    // extracts the necessary data to create
     const {
       nombre,
       apellido,
       email,
       password,
       rol,
-      imagenUrl,
       numero,
       fecha_nacimiento,
       obra_social,
     } = req.body;
-    let user: IUser = new User({
+    let imagenUrl = "";
+    // if a file is uploaded
+    if (req.file) {
+      // get file type and data in buffer
+      const imageBase64 = `data:${
+        req.file.mimetype
+      };base64,${req.file.buffer.toString("base64")}`;
+      // upload image in base64 to cloudinary
+      const result = await cloudinary.uploader.upload(imageBase64, {
+        // image size limit
+        width: 500,
+      });
+      imagenUrl = result.secure_url;
+    }
+    // new instance
+    const user: IUser = new User({
       nombre,
       apellido,
       email,
@@ -39,9 +57,7 @@ export const signUp = async (
     if (!passwordSaved) {
       res.status(400).json("Password encryption failed");
     }
-
     await user.save();
-
     // Devolver datos
     const userData = await User.findById(user._id);
     if (!userData) return res.status(404).json("UserData not found");
