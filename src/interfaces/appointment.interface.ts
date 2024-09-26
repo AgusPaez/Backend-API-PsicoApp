@@ -6,6 +6,7 @@ import { Document } from "mongoose";
 interface Iappointment extends Document {
   nombre: string;
   apellido: string;
+  dni: Number;
   edad: number;
   motivo_consulta: string;
   derivacion?: string;

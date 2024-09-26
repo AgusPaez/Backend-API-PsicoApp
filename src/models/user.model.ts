@@ -14,6 +14,10 @@ const UserSchema = new Schema<IUser>(
       type: String,
       required: [true, "El nombre es obligatorio"],
     },
+    dni: {
+      type: Number,
+      required: [false],
+    },
     email: {
       type: String,
       unique: true,

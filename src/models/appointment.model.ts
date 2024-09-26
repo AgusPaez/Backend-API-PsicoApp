@@ -11,6 +11,9 @@ const AppointmentSchema = new Schema<Iappointment>({
     type: String,
     required: [true, "el apellido es obligatorio"],
   },
+  dni: {
+    type: Number,
+  },
   edad: {
     type: Number,
     required: [true, "el nombre es obligatorio"],

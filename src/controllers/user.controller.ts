@@ -33,6 +33,7 @@ export const createUser = async (
     const {
       nombre,
       apellido,
+      dni,
       email,
       password,
       rol,
@@ -58,6 +59,7 @@ export const createUser = async (
     const user: IUser = new User({
       nombre,
       apellido,
+      dni,
       email,
       password,
       rol,
@@ -123,6 +125,7 @@ export const update = async (
     const {
       nombre,
       apellido,
+      dni,
       email,
       password,
       rol,
@@ -149,6 +152,7 @@ export const update = async (
     const newData = {
       ...(nombre && { nombre }),
       ...(apellido && { apellido }),
+      ...(dni && { dni }),
       ...(email && { email }),
       ...(password && { password }),
       ...(rol && { rol }),
