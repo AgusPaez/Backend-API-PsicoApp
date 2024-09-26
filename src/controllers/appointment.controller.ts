@@ -33,6 +33,7 @@ export const createAppointment = async (
     const {
       nombre,
       apellido,
+      dni,
       edad,
       motivo_consulta,
       derivacion,
@@ -46,6 +47,7 @@ export const createAppointment = async (
     const appointment: Iappointment = new appointmentModel({
       nombre,
       apellido,
+      dni,
       edad,
       motivo_consulta,
       derivacion,
@@ -75,6 +77,7 @@ export const updateAppointment = async (
     const {
       nombre,
       apellido,
+      dni,
       edad,
       motivo_consulta,
       derivacion,
@@ -91,6 +94,7 @@ export const updateAppointment = async (
       {
         nombre,
         apellido,
+        dni,
         edad,
         motivo_consulta,
         derivacion,
@@ -136,6 +140,7 @@ export const deleteAppointment = async (
     return next(error);
   }
 };
+
 // get appointments (email)
 export const findAppointmentsByEmail = async (
   req: Request,
@@ -147,12 +152,8 @@ export const findAppointmentsByEmail = async (
     const { email } = req.params;
     // find the appointment by email
     const appointments = await appointmentModel.find({ email });
-    if (!appointments.length) {
-      return res
-        .status(404)
-        .json({ message: "No appointments found for this email" });
-    }
-    // return appointments
+
+    // if no appointments are found, return an empty array
     return res.status(200).json(appointments);
   } catch (error) {
     return next(error);
