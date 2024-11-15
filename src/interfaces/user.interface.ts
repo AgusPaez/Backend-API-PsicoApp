@@ -12,6 +12,7 @@ interface IUser extends Document {
   imagenUrl?: string; //opcional
   numero?: Number;
   fecha_nacimiento: Date;
+  matricula_profesional?: String;
   obra_social: string;
   validarContraseña(contraseña: string): Promise<boolean>;
   guardarContraseña(): Promise<boolean>;

@@ -39,6 +39,7 @@ export const createUser = async (
       rol,
       numero,
       fecha_nacimiento,
+      matricula_profesional,
       obra_social,
     } = req.body;
     let imagenUrl = "";
@@ -66,6 +67,7 @@ export const createUser = async (
       imagenUrl,
       numero,
       fecha_nacimiento,
+      matricula_profesional,
       obra_social,
     });
     // save user
@@ -131,6 +133,7 @@ export const update = async (
       rol,
       numero,
       fecha_nacimiento,
+      matricula_profesional,
       obra_social,
     } = req.body;
     let imagenUrl = "";
@@ -159,6 +162,7 @@ export const update = async (
       ...(imagenUrl && { imagenUrl }),
       ...(numero && { numero }),
       ...(fecha_nacimiento && { fecha_nacimiento }),
+      ...(matricula_profesional && { matricula_profesional }),
       ...(obra_social && { obra_social }),
     };
     const updatedUser = await userModel.findByIdAndUpdate(id, newData, {

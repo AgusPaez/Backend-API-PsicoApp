@@ -48,6 +48,10 @@ const UserSchema = new Schema<IUser>(
       type: Date,
       required: [true, "La fecha de nacimiento es obligatoria"],
     },
+    matricula_profesional: {
+      type: String,
+      required: false,
+    },
     obra_social: {
       type: String,
       default: "NO TIENE",

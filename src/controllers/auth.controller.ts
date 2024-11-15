@@ -24,6 +24,7 @@ export const signUp = async (
       rol,
       numero,
       fecha_nacimiento,
+      matricula_profesional,
       obra_social,
     } = req.body;
     let imagenUrl = "";
@@ -51,6 +52,7 @@ export const signUp = async (
       imagenUrl,
       numero,
       fecha_nacimiento,
+      matricula_profesional,
       obra_social,
     });
     //Validacion de lo de arriba
