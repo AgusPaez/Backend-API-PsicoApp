@@ -159,3 +159,30 @@ export const findAppointmentsByEmail = async (
     return next(error);
   }
 };
+// Get reserved appointment
+export const getReservedDatesAndTimes = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    // Consultamos todas las citas con fecha y hora de consulta
+    const appointments = await appointmentModel.find(
+      { fecha_consulta: { $exists: true } },
+      { fecha_consulta: 1, _id: 0 }
+    );
+
+    // format 'yyyy-mm-dd HH:mm'
+    const reservedDatesAndTimes = appointments.map((appointment) => {
+      const formattedDate = appointment.fecha_consulta
+        .toISOString()
+        .replace("T", " ")
+        .slice(0, 16); // 'yyyy-mm-dd HH:mm'
+      return formattedDate;
+    });
+
+    return res.status(200).json(reservedDatesAndTimes); // return date and time
+  } catch (error) {
+    return next(error);
+  }
+};
