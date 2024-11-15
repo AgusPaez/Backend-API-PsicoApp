@@ -18,6 +18,7 @@ export const signUp = async (
     const {
       nombre,
       apellido,
+      dni,
       email,
       password,
       rol,
@@ -43,6 +44,7 @@ export const signUp = async (
     const user: IUser = new User({
       nombre,
       apellido,
+      dni,
       email,
       password,
       rol,
