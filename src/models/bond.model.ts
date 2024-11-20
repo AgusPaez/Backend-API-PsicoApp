@@ -16,6 +16,10 @@ const AppointmentSchema = new Schema<Ibond>({
     type: String,
     enum: ["no tiene", "pareja", "familia"],
   },
+  titular: {
+    type: String,
+    required: [true, "el campo titular es obligatorio"],
+  },
   pareja: {
     type: String,
     required: [true, "el campo pareja es obligatorio"],

@@ -6,6 +6,7 @@ interface Ibond extends Document {
   id_vinculo: number;
   nombre_vinculo: string;
   tipo: string;
+  titular: string;
   pareja: string;
   hijo_1?: string;
   hijo_2?: string;
