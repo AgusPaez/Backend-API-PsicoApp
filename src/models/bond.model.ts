@@ -22,7 +22,6 @@ const AppointmentSchema = new Schema<Ibond>({
   },
   pareja: {
     type: String,
-    required: [true, "el campo pareja es obligatorio"],
   },
   hijo_1: {
     type: String,
