@@ -12,6 +12,6 @@ router.get("/:id", bondController.getOne);
 //delete bond
 router.delete("/:id", bondController.destroy);
 //edit bond
-router.put("/:id", bondController.update);
+router.patch("/:id", bondController.update);
 
 export default router;
