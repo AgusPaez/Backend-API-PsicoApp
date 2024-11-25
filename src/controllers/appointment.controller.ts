@@ -1,5 +1,6 @@
 //imports
 import { Request, Response, NextFunction } from "express";
+import moment from "moment-timezone";
 //import * as contentStudiesService from "../services/contentStudiesService";
 import * as appointmentService from "../services/appointmentService";
 //imports interface and model for contentStudies
@@ -29,7 +30,6 @@ export const createAppointment = async (
   next: NextFunction
 ) => {
   try {
-    // extracts the necessary data to create
     const {
       nombre,
       apellido,
@@ -43,7 +43,13 @@ export const createAppointment = async (
       detalle_consulta,
       estado_consulta,
     } = req.body;
-    // new instance
+
+    // Ajustar la fecha a UTC-3 (Argentina)
+    const adjustedDate = moment
+      .tz(fecha_consulta, "America/Argentina/Buenos_Aires")
+      .toDate();
+
+    // Nueva instancia del modelo con la fecha ajustada
     const appointment: Iappointment = new appointmentModel({
       nombre,
       apellido,
@@ -53,11 +59,12 @@ export const createAppointment = async (
       derivacion,
       numero,
       email,
-      fecha_consulta,
+      fecha_consulta: adjustedDate,
       detalle_consulta,
       estado_consulta,
     });
-    // save contentStudies
+
+    // Guardar la cita
     await appointment.save();
     return res.status(200).json(appointment);
   } catch (error) {
