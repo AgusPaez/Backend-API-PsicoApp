@@ -47,7 +47,6 @@ export const createAppointment = async (
     // Ajustar la fecha a UTC-3 (Argentina)
     const adjustedDate = moment.tz(
       fecha_consulta,
-      "dd-MM-yyyy h:mm aa",
       "America/Argentina/San_Juan"
     );
 
