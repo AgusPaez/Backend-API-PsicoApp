@@ -45,9 +45,11 @@ export const createAppointment = async (
     } = req.body;
 
     // Ajustar la fecha a UTC-3 (Argentina)
-    const adjustedDate = moment
-      .tz(fecha_consulta, "America/Argentina/Buenos_Aires")
-      .toDate();
+    const adjustedDate = moment.tz(
+      fecha_consulta,
+      "dd-MM-yyyy h:mm aa",
+      "America/Argentina/San_Juan"
+    );
 
     // Nueva instancia del modelo con la fecha ajustada
     const appointment: Iappointment = new appointmentModel({
