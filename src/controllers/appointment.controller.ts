@@ -1,6 +1,8 @@
 //imports
 import { Request, Response, NextFunction } from "express";
 import moment from "moment-timezone";
+import { encryptData } from "../utils/encryption.util";
+import { decryptData } from "../utils/encryption.util";
 //import * as contentStudiesService from "../services/contentStudiesService";
 import * as appointmentService from "../services/appointmentService";
 //imports interface and model for contentStudies
@@ -14,10 +16,17 @@ export const findAll = async (
   next: NextFunction
 ) => {
   try {
-    // save ContentStudies in "ContentStudies" variable
-    const appointment = await appointmentService.findAllAppointment();
-    // return contentStudies in json
-    return res.status(200).json(appointment);
+    const appointments = await appointmentService.findAllAppointment();
+
+    const decryptedAppointments = appointments.map((appointment) => ({
+      ...appointment.toObject(),
+      motivo_consulta: decryptData(appointment.motivo_consulta),
+      detalle_consulta: appointment.detalle_consulta
+        ? decryptData(appointment.detalle_consulta)
+        : "",
+    }));
+
+    return res.status(200).json(decryptedAppointments);
   } catch (error) {
     return next(error);
   }
@@ -50,18 +59,18 @@ export const createAppointment = async (
       "America/Argentina/San_Juan"
     );
 
-    // Nueva instancia del modelo con la fecha ajustada
+    // Crear una nueva instancia del modelo con los datos cifrados
     const appointment: Iappointment = new appointmentModel({
       nombre,
       apellido,
       dni,
       edad,
-      motivo_consulta,
+      motivo_consulta: encryptData(motivo_consulta),
       derivacion,
       numero,
       email,
       fecha_consulta: adjustedDate,
-      detalle_consulta,
+      detalle_consulta: detalle_consulta ? encryptData(detalle_consulta) : "",
       estado_consulta,
     });
 
@@ -80,7 +89,6 @@ export const updateAppointment = async (
   next: NextFunction
 ) => {
   try {
-    // extract the id from params and the updated data from the request body
     const { id } = req.params;
     const {
       nombre,
@@ -96,23 +104,25 @@ export const updateAppointment = async (
       estado_consulta,
     } = req.body;
 
-    // find the appointment by id and update it with new data
+    // Cifrar los campos que necesitan cifrado
+    const updatedData = {
+      nombre,
+      apellido,
+      dni,
+      edad,
+      motivo_consulta: encryptData(motivo_consulta),
+      derivacion,
+      numero,
+      email,
+      fecha_consulta,
+      detalle_consulta: detalle_consulta ? encryptData(detalle_consulta) : "",
+      estado_consulta,
+    };
+
     const updatedAppointment = await appointmentModel.findByIdAndUpdate(
       id,
-      {
-        nombre,
-        apellido,
-        dni,
-        edad,
-        motivo_consulta,
-        derivacion,
-        numero,
-        email,
-        fecha_consulta,
-        detalle_consulta,
-        estado_consulta,
-      },
-      { new: true } // option to return the updated document
+      updatedData,
+      { new: true }
     );
 
     if (!updatedAppointment) {
@@ -156,13 +166,18 @@ export const findAppointmentsByEmail = async (
   next: NextFunction
 ) => {
   try {
-    // extract the email from params
     const { email } = req.params;
-    // find the appointment by email
     const appointments = await appointmentModel.find({ email });
 
-    // if no appointments are found, return an empty array
-    return res.status(200).json(appointments);
+    const decryptedAppointments = appointments.map((appointment) => ({
+      ...appointment.toObject(),
+      motivo_consulta: decryptData(appointment.motivo_consulta),
+      detalle_consulta: appointment.detalle_consulta
+        ? decryptData(appointment.detalle_consulta)
+        : "",
+    }));
+
+    return res.status(200).json(decryptedAppointments);
   } catch (error) {
     return next(error);
   }
