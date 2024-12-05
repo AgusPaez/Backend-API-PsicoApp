@@ -75,8 +75,17 @@ export const createAppointment = async (
     });
 
     // Guardar la cita
-    await appointment.save();
-    return res.status(200).json(appointment);
+    const savedAppointment = await appointment.save();
+    // Desencriptar los campos antes de devolverlos
+    const decryptedAppointment = {
+      ...savedAppointment.toObject(),
+      motivo_consulta: decryptData(savedAppointment.motivo_consulta),
+      detalle_consulta: savedAppointment.detalle_consulta
+        ? decryptData(savedAppointment.detalle_consulta)
+        : "",
+    };
+
+    return res.status(200).json(decryptedAppointment);
   } catch (error) {
     return next(error);
   }
